@@ -1,0 +1,77 @@
+2019-06-16 16:17:14 INFO  main [mitsuba.cpp:395] Mitsuba version 0.5.0 (Linux, 64 bit), Copyright (c) 2014 Wenzel Jakob
+2019-06-16 16:17:14 INFO  main [mitsuba.cpp:501] Parsing scene description from "/home/madam/Documents/work/tuw/models/torus/rectLight.xml" ..
+2019-06-16 16:17:14 INFO  main [scenehandler.cpp:675] In file "/home/madam/Documents/work/tuw/models/torus/rectLight.xml" (near line 11): Parsing included file "pssmlt.xml" ..
+2019-06-16 16:17:14 INFO  main [PluginManager] Loading plugin "plugins/pssmlt.so" ..
+2019-06-16 16:17:14 INFO  main [PluginManager] Loading plugin "plugins/independent.so" ..
+2019-06-16 16:17:15 INFO  main [PluginManager] Loading plugin "plugins/box.so" ..
+2019-06-16 16:17:15 INFO  main [PluginManager] Loading plugin "plugins/hdrfilm.so" ..
+2019-06-16 16:17:15 INFO  main [PluginManager] Loading plugin "plugins/perspective.so" ..
+2019-06-16 16:17:15 INFO  main [PluginManager] Loading plugin "plugins/diffuse.so" ..
+2019-06-16 16:17:15 INFO  main [PluginManager] Loading plugin "plugins/conductor.so" ..
+2019-06-16 16:17:15 INFO  main [spectrum.cpp:601] "Al.eta.spd": loaded a spectral power distribution with 56 entries (between 298.757050 and 885.601257 nm)
+2019-06-16 16:17:15 INFO  main [spectrum.cpp:601] "Al.k.spd": loaded a spectral power distribution with 56 entries (between 298.757050 and 885.601257 nm)
+2019-06-16 16:17:15 WARN  main [scenehandler.cpp:795] In file "/home/madam/Documents/work/tuw/models/torus/rectLight.xml" (near line 46): Unqueried attribute "alpha" in element "bsdf"
+2019-06-16 16:17:15 INFO  main [PluginManager] Loading plugin "plugins/dielectric.so" ..
+2019-06-16 16:17:15 WARN  main [scenehandler.cpp:795] In file "/home/madam/Documents/work/tuw/models/torus/rectLight.xml" (near line 53): Unqueried attribute "alpha" in element "bsdf"
+2019-06-16 16:17:15 INFO  main [PluginManager] Loading plugin "plugins/area.so" ..
+2019-06-16 16:17:15 INFO  main [PluginManager] Loading plugin "plugins/rectangle.so" ..
+2019-06-16 16:17:15 INFO  main [PluginManager] Loading plugin "plugins/sphere.so" ..
+2019-06-16 16:17:15 INFO  main [PluginManager] Loading plugin "plugins/serialized.so" ..
+2019-06-16 16:17:15 INFO  main [SerializedMesh] Loading shape 1 from "meshes.serialized" ..
+2019-06-16 16:17:15 INFO  main [SerializedMesh] Loading shape 2 from "meshes.serialized" ..
+2019-06-16 16:17:15 INFO  main [SerializedMesh] Loading shape 3 from "meshes.serialized" ..
+2019-06-16 16:17:15 INFO  main [SerializedMesh] Loading shape 4 from "meshes.serialized" ..
+2019-06-16 16:17:15 INFO  main [SerializedMesh] Loading shape 5 from "meshes.serialized" ..
+2019-06-16 16:17:15 INFO  ren0 [KDTreeBase] Constructing a SAH kd-tree (23616 primitives) ..
+2019-06-16 16:17:15 INFO  ren0 [KDTreeBase] Finished -- took 131 ms.
+2019-06-16 16:17:15 INFO  ren0 [PSSMLT] Starting render job (512x512, 1 core, SSE2 disabled, approx. 7 mutations/p2019-06-16 16:17:27 INFO  ren0 [RenderJob] Render time: 13.9110s
+2019-06-16 16:17:27 INFO  ren0 [HDRFilm] Writing image to "/home/madam/tmp/shortRenderings/torus/pt_sampleBudget_19_timeBudget_10.2252019-06-16 16:17:31 INFO  ren0 [RenderJob] Render time: 19.2390s
+2019-06-16 16:17:31 INFO  ren0 [HDRFilm] Writing image to "/home/madam/tmp/shortRenderings/torus/memlt_sampleBudget_12_timeBudget_10.97114726305008/05455_seed1229154351_time19.239000_.exr" ..
+2019-06-16 16:17:31 INFO  main [statistics.cpp:142] Statistics:
+------------------------------------------------------------
+ * Loaded plugins :
+    -  plugins/area.so [Area light]
+    -  plugins/box.so [Box filter]
+    -  plugins/conductor.so [Smooth conductor]
+    -  plugins/dielectric.so [Smooth dielectric BSDF]
+    -  plugins/diffuse.so [Smooth diffuse BRDF]
+    -  plugins/hdrfilm.so [High dynamic range film]
+    -  plugins/independent.so [Independent sampler]
+    -  plugins/mlt.so [Path Space Metropolis Light Transport]
+    -  plugins/perspective.so [Perspective camera]
+    -  plugins/rectangle.so [Rectangle intersection primitive]
+    -  plugins/serialized.so [Serialized mesh loader]
+    -  plugins/sphere.so [Sphere intersection primitive]
+
+  * Bidirectional mutation :
+    -  Acceptance rate : 9.47 % (111.51 K of 1.18 M)
+    -  Successful generation rate : 13.01 % (153.18 K of 1.18 M)
+
+  * General :
+    -  Normal rays traced : 17.694 M
+    -  Shadow rays traced : 1.220 M
+
+  * Manifold perturbation :
+    -  Acceptance rate (imp. transport) : 66.57 % (247.39 K of 371.61 K)
+    -  Acceptance rate (rad. transport) : 80.14 % (962.09 K of 1.20 M)
+    -  Non-reversible walks : 0.11 % (1.60 K of 1.44 M)
+    -  Perturbations involving manifold walks : 31.49 % (455.05 K of 1.44 M)
+    -  Rough material treated as specular : 0.00 % (0.00 of 1.41 M)
+    -  Successful generation rate (imp. transport) : 69.47 % (258.15 K of 371.61 K)
+    -  Successful generation rate (rad. transport) : 87.00 % (1.04 M of 1.20 M)
+
+  * Path Space MLT :
+    -  Accepted mutations : 41.99 % (1.32 M of 3.15 M)
+
+  * Specular manifold :
+    -  Avg. iterations per successful walk : 2.35 (1.78 M / 760.01 K)
+    -  Avg. iterations per walk : 3.76 (3.11 M / 826.41 K)
+    -  Avg. manifold size : 5.43 (4.49 M / 826.41 K)
+    -  Max. manifold size : 15
+    -  Non-manifold : 0.00 % (23.00 of 5.61 M)
+    -  Retries (step failed) : 453.334 K
+    -  Retries (step increased distance) : 551.273 K
+    -  Successful steps : 2.105 M
+    -  Successful walks : 91.97 % (760.01 K of 826.41 K)
+    -  Update failed : 17.768 K
+------------------------------------------------------------
