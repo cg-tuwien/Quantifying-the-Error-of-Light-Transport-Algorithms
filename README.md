@@ -1,5 +1,5 @@
 # Quantifying the Error of Light Transport Algorithms
-## Abstract
+## Paper Abstract
 This paper proposes a new methodology for measuring the error of unbiased physically based rendering algorithms. The
 current state of the art includes mean squared error (MSE) based metrics and visual comparisons of equal-time renderings
 of competing algorithms. Neither is satisfying as MSE does not describe behavior and can exhibit significant variance, and
