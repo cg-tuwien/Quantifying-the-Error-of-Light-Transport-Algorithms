@@ -12,4 +12,10 @@ frequencies. The ESE serves two purposes: It reveals correlation between pixels 
 the amount of error substantially.
 
 ## Repository
-This repository contains a MATLAB and a python implementation for calculating SDpp images and the ESE. Additionally, there is also a python script for generating the short renderings.
+This repository contains a MATLAB and a python (python work is still going on) implementation for calculating SDpp images and the ESE.
+Additionally, there is also a python script for generating the short renderings.
+You are welcome to commit any improvements you might have.
+
+## Support
+Please use the issue tracker if you have any questions, so others can benefit from it.
+If you need to send me an message anyways, please use Quantifying-the-Error-of-Light-Transport-Algorithms at xibo dot at.
