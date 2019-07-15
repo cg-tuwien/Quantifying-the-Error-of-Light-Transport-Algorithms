@@ -18,4 +18,4 @@ You are welcome to commit any improvements you might have.
 
 ## Support
 Please use the issue tracker if you have any questions, so others can benefit from it.
-If you need to send me a message anyways, please use Quantifying-the-Error-of-Light-Transport-Algorithms at xibo dot at.
+If you need to send me an e-mail anyways, please use Quantifying-the-Error-of-Light-Transport-Algorithms at xibo dot at.
