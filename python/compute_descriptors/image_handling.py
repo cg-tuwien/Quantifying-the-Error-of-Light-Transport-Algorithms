@@ -77,42 +77,79 @@ class OnlineAvgAndVar:
             return (self.mean, self.M2/(self.count - 1))
 
 def cutOutSquare(data):
-    height, width = data.shape
+    height, width, depth = data.shape
     size = min(width, height)
     rowStart = int(height / 2 - size / 2)
     rowEnd = int(height / 2 + size / 2)
     colStart = int(width / 2 - size / 2)
     colEnd = int(width / 2 + size / 2)
-    return data[rowStart : rowEnd, colStart : colEnd]
+    return data[rowStart : rowEnd, colStart : colEnd, :]
 
-class RadialAverage:
-    def __init__(self):
-        pass
-
-    def __call__(self, data):
-        data = cutOutSquare(data)
-        size = data.shape[0]
-        coords = self.__transform_radial_coords(self.__radial_coords(size))
-        coords[0] += size / 2 # check
-        coords[1] += size / 2 # check
-        
-        # draw samples / check
-        # simple sampling
-        # bilinear sampling
-        # average over rows
-        
-        return coords
+def radial_average(data):
+    data = cutOutSquare(data)
+    size = data.shape[0]
+    coords = __transform_radial_coords(__radial_coords(size))
+    coords[0] += size / 2 # check
+    coords[1] += size / 2 # check
     
-    def __radial_coords(self, size):
-        n_radial_samples = size / 2 * 2 * math.pi
-        return np.meshgrid(np.r_[0 : size/2 : 1] + 0.5 - (size % 2) / 2,
-                           np.r_[0 : 2 * math.pi : 2 * math.pi / n_radial_samples])
-        
-    def __transform_radial_coords(self, coords):
-        sini = np.sin(coords[1])
-        cosini = np.cos(coords[1])
-        radi = coords[0]
-        return [radi * sini, radi * cosini]
-        
+    # draw samples / check
+    polar = __sample(data, coords)
+    
+    # average over rows
+    radialAverage = np.mean(polar, axis=0);
+    
+    return radialAverage
 
+def __sample(image, coords):
+    height, width, depth = image.shape
+    ## simple nn sampling
+    #return image[coords[0].astype(int), coords[1].astype(int), :];
+    ## bilinear sampling
+    tlF = [(coords[0] - 0.5), (coords[1] - 0.5)]
+    trF = [(coords[0] + 0.5), (coords[1] - 0.5)]
+    blF = [(coords[0] - 0.5), (coords[1] + 0.5)]
+    brF = [(coords[0] + 0.5), (coords[1] + 0.5)]
+    
+    tlI = [tlF[0].astype(int), tlF[1].astype(int)]
+    trI = [trF[0].astype(int), trF[1].astype(int)]
+    blI = [blF[0].astype(int), blF[1].astype(int)]
+    brI = [brF[0].astype(int), brF[1].astype(int)]
+    
+    tlP = (tlI[0] - tlF[0] + 1) * (tlI[1] - tlF[1] + 1)
+    trP = (trF[0] - trI[0])     * (trI[1] - trF[1] + 1)
+    blP = (blI[0] - blF[0] + 1) * (blF[1] - blI[1])
+    brP = (brF[0] - brI[0])     * (brF[1] - brI[1])
+    
+#        pCheck = tlP + trP + blP + brP - 1;
+#        pCheck *= pCheck;
+#        pCheck = np.sum(pCheck);
+#        pCheck /= (width * height);
+#        assert pCheck < 0.0000001
+    
+    np.clip(tlI[0], 0, width - 1, out=tlI[0])
+    np.clip(tlI[1], 0, height - 1, out=tlI[1])
+    np.clip(trI[0], 0, width - 1, out=trI[0])
+    np.clip(trI[1], 0, height - 1, out=trI[1])
+    np.clip(blI[0], 0, width - 1, out=blI[0])
+    np.clip(blI[1], 0, height - 1, out=blI[1])
+    np.clip(brI[0], 0, width - 1, out=brI[0])
+    np.clip(brI[1], 0, height - 1, out=brI[1])
+    
+    return image[tlI[0].astype(int), tlI[1].astype(int)] * tlP[:, :, np.newaxis] \
+           + image[trI[0].astype(int), trI[1].astype(int)] * trP[:, :, np.newaxis] \
+           + image[blI[0].astype(int), blI[1].astype(int)] * blP[:, :, np.newaxis]  \
+           + image[brI[0].astype(int), brI[1].astype(int)] * brP[:, :, np.newaxis]
+    
+    
+    
+def __radial_coords(size):
+    n_radial_samples = size / 2 * 2 * math.pi
+    return np.meshgrid(np.r_[0 : size/2 : 1] + 0.5 - (size % 2) / 2,
+                       np.r_[0 : 2 * math.pi : 2 * math.pi / n_radial_samples])
+    
+def __transform_radial_coords(coords):
+    sini = np.sin(coords[1])
+    cosini = np.cos(coords[1])
+    radi = coords[0]
+    return [radi * sini, radi * cosini]
 
