@@ -1,4 +1,5 @@
 # Quantifying the Error of Light Transport Algorithms
+You can download the full paper from the institutes homepage: https://www.cg.tuwien.ac.at/research/publications/2019/celarek_adam-2019-qelta/
 ## Paper Abstract
 This paper proposes a new methodology for measuring the error of unbiased physically based rendering algorithms. The
 current state of the art includes mean squared error (MSE) based metrics and visual comparisons of equal-time renderings
@@ -18,4 +19,4 @@ You are welcome to commit any improvements you might have.
 
 ## Support
 Please use the issue tracker if you have any questions, so others can benefit from it.
-If you need to send me a message anyways, please use Quantifying-the-Error-of-Light-Transport-Algorithms at xibo dot at.
+If you need to send me an e-mail anyways, please use Quantifying-the-Error-of-Light-Transport-Algorithms at xibo dot at.
