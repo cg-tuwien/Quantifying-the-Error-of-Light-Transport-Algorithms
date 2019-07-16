@@ -32,7 +32,8 @@ import numpy as np
 import image_handling
 from pathlib import Path
 
-base_path = "/home/madam/tmp/shortRenderings"
+base_path = "/home/madam/tmp"
+short_renderings_path = f"{base_path}/shortRenderings"
 
 #scenes = {"torus", "kitchen", "sponza", "bottle", "door", "bathroom"}
 #integrators = {"pt", "bdpt", "memlt", "pssmlt"}
@@ -40,7 +41,7 @@ base_path = "/home/madam/tmp/shortRenderings"
 scenes = {"torus"}
 integrators = {"pt", "memlt"}
 file_ending = ".exr"
-n = 20
+max_n = 20
 
 imread_fun = imageio.imread # should return linear hdr float, 0 is black, 1 is white
 def imwrite_fun(path, image):   # eats linear hdr float

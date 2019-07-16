@@ -38,11 +38,11 @@ def comp(scene, integrator):
         aggr.update(i)
     (mean, var) = aggr.finalize()
     
-    config.imwrite_fun(f"{config.base_path}/../aggr/{scene}_mean_{integrator}.png", mean)
-    config.imwrite_fun(f"{config.base_path}/../aggr/{scene}_var_{integrator}.png", var)
-    config.imwrite_fun(f"{config.base_path}/../aggr/{scene}_stddev_{integrator}.png", np.sqrt(var))
+    config.imwrite_fun(f"{config.base_path}/aggr/{scene}_mean_{integrator}.png", mean)
+    config.imwrite_fun(f"{config.base_path}/aggr/{scene}_var_{integrator}.png", var)
+    config.imwrite_fun(f"{config.base_path}/aggr/{scene}_stddev_{integrator}.png", np.sqrt(var))
     stddev_lum_cm = image_handling.colour_mapped(image_handling.rgb_to_lum(np.sqrt(var)), 0, 2);
-    config.imwrite_fun(f"{config.base_path}/../aggr/{scene}_stddev_lumCm_{integrator}.png", stddev_lum_cm)
+    config.imwrite_fun(f"{config.base_path}/aggr/{scene}_stddev_lumCm_{integrator}.png", stddev_lum_cm)
 
 comp('torus', 'pt')
 comp('torus', 'memlt')

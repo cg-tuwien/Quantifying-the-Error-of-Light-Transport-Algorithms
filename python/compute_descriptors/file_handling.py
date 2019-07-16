@@ -38,7 +38,7 @@ class FileList:
         self.paths = paths
 
 def files_for(scene, integrator, config):
-    scene_path = Path(config.base_path).joinpath(scene)
+    scene_path = Path(config.short_renderings_path).joinpath(scene)
     integrator_paths = set()
     for f in os.scandir(scene_path):
         if f.is_dir() and f.name[0:len(integrator)] == integrator:
@@ -67,6 +67,8 @@ def files_for(scene, integrator, config):
             time_budget_n += 1
             
             paths.add(f.path)
+        if len(paths) >= config.max_n:
+            break;
     if time_budget_n != 0:
         time_budget /= time_budget_n
     
