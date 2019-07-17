@@ -103,10 +103,11 @@ classdef Helper
 
             S = Helper.radialdiscretization(size(img));
             w = [min(S(1:2))/2, 4*min(S(1:2))];
+            deltaAngle = 2*pi/S(2);
             if params.useGPU
-                [r, phi] = meshgrid(gpuArray(0:1:S(1)-1), gpuArray(0:2*pi/S(2):2*pi-eps));
+                [r, phi] = meshgrid(gpuArray(0:1:S(1)-1), gpuArray(0:deltaAngle:2*pi-deltaAngle));
             else
-                [r, phi] = meshgrid(0:1:S(1)-1, 0:2*pi/S(2):2*pi-eps);
+                [r, phi] = meshgrid(0:1:S(1)-1, 0:deltaAngle:2*pi-deltaAngle);
             end
 
             x = r.*cos(phi) + size(img,2)/2 + 1; % +1 is to account for fftshift placing the DC at w/2 + 1, h/2 + 1
