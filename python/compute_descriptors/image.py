@@ -28,22 +28,7 @@
 import math
 import numpy as np
 
-import matplotlib
-import matplotlib.cm
 
-import madam_cm
-import constants
-
-def rgb_to_lum(rgb_image):
-    return np.sum(rgb_image * constants.luminance_factors, 2)
-
-def colour_mapped(mono, low, high):
-    if mono.ndim > 2:
-        raise Exception("colour_map is only applicable for mono matrices")
-      
-    normaliser = matplotlib.colors.Normalize(vmin=low, vmax=high, clip=True)
-    mapper = matplotlib.cm.ScalarMappable(norm=normaliser, cmap=madam_cm.cm_linSeg)
-    return mapper.to_rgba(mono);
 
 class OnlineAvgAndVar:
     def __init__(self, width, height, depth):
@@ -79,7 +64,7 @@ def powerSpectrum(image):
     s = s * s
     return s
 
-def cutOutSquare(data):
+def __cutOutSquare(data):
     height = data.shape[0]
     width = data.shape[1]
     size = min(width, height)
@@ -90,7 +75,7 @@ def cutOutSquare(data):
     return data[rowStart : rowEnd, colStart : colEnd, :]
 
 def polar_transform(data):
-    data = cutOutSquare(data)
+    data = __cutOutSquare(data)
     size = data.shape[0]
     coords = __transform_radial_coords(__radial_coords(size))
     coords[0] += size / 2 + 0.5

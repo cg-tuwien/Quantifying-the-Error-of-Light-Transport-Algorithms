@@ -29,11 +29,12 @@ import re # regexp
 import warnings
 import imageio
 import numpy as np
-import constants
+import conversion
 from pathlib import Path
 
 base_path = "/home/madam/tmp"
 short_renderings_path = f"{base_path}/shortRenderings"
+reference_renderings_path = f"{base_path}/references"
 
 #scenes = {"torus", "kitchen", "sponza", "bottle", "door", "bathroom"}
 #integrators = {"pt", "bdpt", "memlt", "pssmlt"}
@@ -42,15 +43,27 @@ scenes = {"torus"}
 integrators = {"pt", "memlt"}
 file_ending = ".exr"
 max_n = 20
+sdPP_max = 2
+use_external_reference_image = False;
+
+ensemble_area_lower_tail_body_border = .10;
+ensemble_area_lower_body_head_border = .20;
+ensemble_area_upper_head_body_border = .80;
+ensemble_area_upper_body_tail_border = .90;
 
 imread_fun = imageio.imread # should return linear hdr float, 0 is black, 1 is white
 def imwrite_fun(path, image):   # eats linear hdr float
     Path(path).parent.mkdir(parents=True, exist_ok=True)
-    image = image ** constants.gamma_correction
+    image = conversion.gammaCorrected(image)
     image = image * 255
     image = np.minimum(image, 255)
     imageio.imwrite(path, image.astype(np.uint8))
     
+def reference_image(scene):
+    return imread_fun(f"{reference_renderings_path}/{scene}.exr")
+    
+def error_fun(image, reference):
+    return conversion.rgb_to_lum(image - reference)
 
 def sample_budget_extractor(path):
     search = re.search('_sampleBudget_(\d+)', path, re.IGNORECASE)
