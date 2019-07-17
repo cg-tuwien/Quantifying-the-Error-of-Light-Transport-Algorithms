@@ -31,7 +31,7 @@ class Descriptor:
         return self.mean
     
     def sdPpImage(self, config):
-        return conversion.colour_mapped(conversion.rgb_to_lum(np.sqrt(self.var)), 0, self.config.sdPP_max);
+        return conversion.colour_mapped(conversion.rgb_to_lum(np.sqrt(self.var)), 0, config.sdPP_max);
 
     def n(self):
         return len(self.radial_averages)
@@ -110,7 +110,7 @@ def comp(scene, integrator, config):
     avg_spp /= len(files.paths)
     avg_time /= len(files.paths)
     
-    return Descriptor(integrator, mean, var, radial_averages, len(files.paths), avg_spp, avg_time);
+    return Descriptor(integrator, mean, var, radial_averages, avg_spp, avg_time);
         
     
 

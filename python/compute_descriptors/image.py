@@ -72,7 +72,7 @@ def __cutOutSquare(data):
     rowEnd = int(height / 2 + size / 2)
     colStart = int(width / 2 - size / 2)
     colEnd = int(width / 2 + size / 2)
-    return data[rowStart : rowEnd, colStart : colEnd, :]
+    return data[rowStart : rowEnd, colStart : colEnd, ...]
 
 def polar_transform(data):
     data = __cutOutSquare(data)
@@ -93,7 +93,8 @@ def radial_average(data):
     return radialAverage
 
 def __sample(image, coords):
-    height, width, depth = image.shape
+    height = image.shape[0]
+    width = image.shape[1]
     ## simple nn sampling
     #return image[coords[0].astype(int), coords[1].astype(int), :];
     ## bilinear sampling
@@ -127,10 +128,10 @@ def __sample(image, coords):
     np.clip(brI[0], 0, width - 1, out=brI[0])
     np.clip(brI[1], 0, height - 1, out=brI[1])
     
-    return image[tlI[0].astype(int), tlI[1].astype(int)] * tlP[:, :, np.newaxis] \
-           + image[trI[0].astype(int), trI[1].astype(int)] * trP[:, :, np.newaxis] \
-           + image[blI[0].astype(int), blI[1].astype(int)] * blP[:, :, np.newaxis]  \
-           + image[brI[0].astype(int), brI[1].astype(int)] * brP[:, :, np.newaxis]
+    return image[tlI[0].astype(int), tlI[1].astype(int)] * tlP \
+           + image[trI[0].astype(int), trI[1].astype(int)] * trP \
+           + image[blI[0].astype(int), blI[1].astype(int)] * blP  \
+           + image[brI[0].astype(int), brI[1].astype(int)] * brP
 
 def __radial_coords(size):
     n_radial_samples = size * 4 #/ 2 * 2 * math.pi

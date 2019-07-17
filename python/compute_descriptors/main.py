@@ -25,24 +25,13 @@
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-import numpy as np
 import config
-import image_handling
-import file_handling
+import descriptor_comp
+import descriptor_vis
 
-def comp(scene, integrator):
-    files = file_handling.files_for(scene, integrator, config)
-    aggr = image_handling.OnlineAvgAndVar(512, 512, 3) 
-    for f in files.paths: 
-        i = config.imread_fun(f) 
-        aggr.update(i)
-    (mean, var) = aggr.finalize()
+for s in config.scenes:
+    descriptors = []
+    for i in config.integrators:
+        descriptors.append(descriptor_comp.comp(s, i, config))
     
-    config.imwrite_fun(f"{config.base_path}/aggr/{scene}_mean_{integrator}.png", mean)
-    config.imwrite_fun(f"{config.base_path}/aggr/{scene}_var_{integrator}.png", var)
-    config.imwrite_fun(f"{config.base_path}/aggr/{scene}_stddev_{integrator}.png", np.sqrt(var))
-    stddev_lum_cm = image_handling.colour_mapped(image_handling.rgb_to_lum(np.sqrt(var)), 0, 2);
-    config.imwrite_fun(f"{config.base_path}/aggr/{scene}_stddev_lumCm_{integrator}.png", stddev_lum_cm)
-
-comp('torus', 'pt')
-comp('torus', 'memlt')
+    descriptor_vis.vis(s, descriptors, config)
