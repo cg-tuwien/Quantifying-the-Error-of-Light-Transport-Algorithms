@@ -34,12 +34,8 @@ import matplotlib.cm
 import madam_cm
 import constants
 
-
 def rgb_to_lum(rgb_image):
     return np.sum(rgb_image * constants.luminance_factors, 2)
-
-def gamma_corrected(i):
-    return i ** constants.gamma_correction
 
 def colour_mapped(mono, low, high):
     if mono.ndim > 2:

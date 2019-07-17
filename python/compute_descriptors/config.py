@@ -29,7 +29,7 @@ import re # regexp
 import warnings
 import imageio
 import numpy as np
-import image_handling
+import constants
 from pathlib import Path
 
 base_path = "/home/madam/tmp"
@@ -46,7 +46,7 @@ max_n = 20
 imread_fun = imageio.imread # should return linear hdr float, 0 is black, 1 is white
 def imwrite_fun(path, image):   # eats linear hdr float
     Path(path).parent.mkdir(parents=True, exist_ok=True)
-    image = image_handling.gamma_corrected(image)
+    image = image ** constants.gamma_correction
     image = image * 255
     image = np.minimum(image, 255)
     imageio.imwrite(path, image.astype(np.uint8))
