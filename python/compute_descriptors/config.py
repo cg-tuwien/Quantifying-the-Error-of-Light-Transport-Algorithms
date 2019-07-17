@@ -46,6 +46,14 @@ max_n = 20
 sdPP_max = 2
 use_external_reference_image = False;
 
+colours = ((0.7, 0.0, 0),
+           (0.0, 0.45, 0.7),
+           (0.7, 0.45, 0.0),
+           (0.0, 0.6, 0),
+           (0.9, 0.5, 0.0),
+           (0.75, 0.0, 0.75),
+           (0.7, 0.5, 0))
+
 ensemble_area_lower_tail_body_border = .10;
 ensemble_area_lower_body_head_border = .20;
 ensemble_area_upper_head_body_border = .80;

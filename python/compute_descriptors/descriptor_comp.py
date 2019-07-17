@@ -45,16 +45,22 @@ class Descriptor:
     def rmseSD(self):
         aggr = image.OnlineAvgAndVar(1, 1, 1)
         for d in self.radial_averages:
-            aggr.update(np.sqrt(d.mse))
+            aggr.update(np.full((1, 1, 1), np.sqrt(d.mse)))
         
         (mean, var) = aggr.finalize()
-        return np.sqrt(var);
+        return np.sqrt(var[0, 0, 0]);
     
     def __raMean(self, beginIdx, endIdx):
-        raSum = self.radial_averages[beginIdx].frequencyError
-        for i in range(beginIdx + 1, endIdx):
+        beginIdx = int(beginIdx);
+        endIdx = int(endIdx);
+        raSum = np.zeros_like(self.radial_averages[beginIdx].frequencyError)
+        n = 0
+        for i in range(beginIdx, endIdx):
             raSum += self.radial_averages[i].frequencyError
-        return raSum / (endIdx - beginIdx)
+            n += 1
+        assert n == (endIdx - beginIdx)
+        raMean = raSum / (endIdx - beginIdx)
+        return raMean
     
     def ensembleMean(self):
         return self.__raMean(0, self.n());
@@ -76,6 +82,9 @@ class Descriptor:
     
     def upperTail(self, config):
         return self.__raMean(config.ensemble_area_upper_body_tail_border * self.n(), self.n());
+    
+    def label(self):
+        return f"{self.integrator.upper()} (RMSE: {self.rmse():.3}, s: {self.rmseSD():.3}, t: {self.avg_spp}x{self.avg_time:.3}s)"
 
 def comp_partial_descriptor(shortRendering, reference, config):
     e = config.error_fun(shortRendering, reference)

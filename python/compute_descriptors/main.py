@@ -35,3 +35,5 @@ for s in config.scenes:
         descriptors.append(descriptor_comp.comp(s, i, config))
     
     descriptor_vis.vis(s, descriptors, config)
+    
+    
