@@ -72,8 +72,16 @@ class OnlineAvgAndVar:
         else:
             return (self.mean, self.M2/(self.count - 1))
 
+def powerSpectrum(image):
+    s = np.fft.fft2(image, axes=(0, 1))
+    s = np.fft.fftshift(s)
+    s = np.absolute(s)
+    s = s * s
+    return s
+
 def cutOutSquare(data):
-    height, width, depth = data.shape
+    height = data.shape[0]
+    width = data.shape[1]
     size = min(width, height)
     rowStart = int(height / 2 - size / 2)
     rowEnd = int(height / 2 + size / 2)
@@ -81,16 +89,19 @@ def cutOutSquare(data):
     colEnd = int(width / 2 + size / 2)
     return data[rowStart : rowEnd, colStart : colEnd, :]
 
-def radial_average(data):
+def polar_transform(data):
     data = cutOutSquare(data)
     size = data.shape[0]
     coords = __transform_radial_coords(__radial_coords(size))
-    coords[0] += size / 2 # check
-    coords[1] += size / 2 # check
+    coords[0] += size / 2 + 0.5
+    coords[1] += size / 2 + 0.5
     
     # draw samples / check
     polar = __sample(data, coords)
-    
+    return polar
+
+def radial_average(data):
+    polar = polar_transform(data)
     # average over rows
     radialAverage = np.mean(polar, axis=0);
     
@@ -135,17 +146,18 @@ def __sample(image, coords):
            + image[trI[0].astype(int), trI[1].astype(int)] * trP[:, :, np.newaxis] \
            + image[blI[0].astype(int), blI[1].astype(int)] * blP[:, :, np.newaxis]  \
            + image[brI[0].astype(int), brI[1].astype(int)] * brP[:, :, np.newaxis]
-    
-    
-    
+
 def __radial_coords(size):
-    n_radial_samples = size / 2 * 2 * math.pi
-    return np.meshgrid(np.r_[0 : size/2 : 1] + 0.5 - (size % 2) / 2,
-                       np.r_[0 : 2 * math.pi : 2 * math.pi / n_radial_samples])
+    n_radial_samples = size * 4 #/ 2 * 2 * math.pi
+    dAngle = 2 * math.pi / n_radial_samples
+    # if data is 16x16, then fft2 puts dc term on +8+8, so this is the centre
+    # if data is 17x17, then fft2 puts dc term on +8+8
+    maxRadius = int((size - 1) / 2);
+    return np.meshgrid(np.r_[0 : maxRadius + 1 : 1],
+                       np.r_[0 : 2 * math.pi : dAngle])
     
 def __transform_radial_coords(coords):
     sini = np.sin(coords[1])
     cosini = np.cos(coords[1])
     radi = coords[0]
     return [radi * sini, radi * cosini]
-
