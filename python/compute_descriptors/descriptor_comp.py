@@ -5,10 +5,12 @@ Documentation, License etc.
 '''
 
 import numpy as np
+import math
 
 import conversion
 import image
 import file_handling
+import constants
 
 class RadialAverage:
     def __init__(self, mse, frequencyError):
@@ -17,8 +19,9 @@ class RadialAverage:
     
         
 class Descriptor:
-    def __init__(self, integrator, mean, var, radial_averages, avg_spp, avg_time):
+    def __init__(self, integrator, short_rendering_example, mean, var, radial_averages, avg_spp, avg_time):
         self.integrator = integrator
+        self.short_rendering_example = short_rendering_example
         self.mean = mean
         self.var = var
         self.radial_averages = radial_averages
@@ -31,7 +34,7 @@ class Descriptor:
         return self.mean
     
     def sdPpImage(self, config):
-        return conversion.colour_mapped(conversion.rgb_to_lum(np.sqrt(self.var)), 0, config.sdPP_max);
+        return conversion.colour_mapped(np.sqrt(self.var), 0, config.sdPP_max);
 
     def n(self):
         return len(self.radial_averages)
@@ -86,40 +89,48 @@ class Descriptor:
     def label(self):
         return f"{self.integrator.upper()} (RMSE: {self.rmse():.3}, s: {self.rmseSD():.3}, t: {self.avg_spp}x{self.avg_time:.3}s)"
 
-def comp_partial_descriptor(shortRendering, reference, config):
-    e = config.error_fun(shortRendering, reference)
-    ps = image.powerSpectrum(e)
+def normalised_error(shortRendering, reference, avg_time, config):
+    e = (shortRendering - reference) * math.sqrt(avg_time)
+    if config.error_fun == constants.ERROR_FUN_RELATIVE:
+        e /= reference + config.relative_error_eps
+    return e
+
+def comp_partial_descriptor(error, config):
+    ps = image.powerSpectrum(error)
     ra = image.radial_average(ps)
-    e *= e
-    mse = np.mean(e)
+    mse = np.mean(error * error)
     return RadialAverage(mse, ra)
 
 def comp(scene, integrator, config):
     files = file_handling.files_for(scene, integrator, config)
-    aggr = image.OnlineAvgAndVar(512, 512, 3) 
-    for f in files.paths: 
-        i = config.imread_fun(f) 
-        aggr.update(i)
-    (mean, var) = aggr.finalize()
-    
-    reference = mean
-    if config.use_external_reference_image:
-        reference = config.reference_image(scene)
-    
-    
-    radial_averages = []
+    shortRenderingMean = np.zeros((512, 512, 3)) 
     avg_spp = 0;
     avg_time = 0;
-    for f in files.paths:
+    for f in files.paths: 
+        i = config.imread_fun(f) 
+        shortRenderingMean += i
         avg_spp += config.sample_budget_extractor(f)
         avg_time += config.time_budget_extractor(f)
-        i = config.imread_fun(f)
-        radial_averages.append(comp_partial_descriptor(i, reference, config))
-    
+        
+    shortRenderingMean /= len(files.paths)
     avg_spp /= len(files.paths)
     avg_time /= len(files.paths)
     
-    return Descriptor(integrator, mean, var, radial_averages, avg_spp, avg_time);
+    reference = conversion.rgb_to_lum(shortRenderingMean)
+    if config.use_external_reference_image:
+        reference = conversion.rgb_to_lum(config.reference_image(scene))
+    
+    radial_averages = []
+    shortRenderingVar = np.zeros((512, 512))
+    for f in files.paths:
+        i = conversion.rgb_to_lum(config.imread_fun(f))
+        error = normalised_error(i, reference, avg_time, config)
+        shortRenderingVar += error ** 2
+        radial_averages.append(comp_partial_descriptor(error, config))
+    
+    shortRenderingVar /= len(files.paths)
+    
+    return Descriptor(integrator, i, shortRenderingMean, shortRenderingVar, radial_averages, avg_spp, avg_time);
         
     
 

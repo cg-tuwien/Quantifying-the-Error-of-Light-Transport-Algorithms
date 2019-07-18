@@ -13,8 +13,11 @@ def vis(scene, descriptors, config):
     
     i = 0
     for d in descriptors:
-        config.imwrite_fun(f"{config.base_path}/aggr/{scene}_mean_{d.integrator}.png", d.meanImage())
-        config.imwrite_fun(f"{config.base_path}/aggr/{scene}_SDpp_{d.integrator}.png", d.sdPpImage(config))
+        n = d.n()
+        config.imwrite_fun(f"{config.out_path}/{scene}_N{n}/mean_{d.integrator.upper()}.png", d.meanImage())
+        config.imwrite_fun(f"{config.out_path}/{scene}_N{n}/SDpp_{d.integrator.upper()}.png", d.sdPpImage(config))
+        config.imwrite_fun(f"{config.out_path}/{scene}_N{n}/exampleShortRendering_{d.integrator.upper()}.png",
+                           d.short_rendering_example)
         
         ensembleMean = d.ensembleMean()
         maxFreq = len(ensembleMean) - 1
@@ -28,11 +31,10 @@ def vis(scene, descriptors, config):
         
         ax.plot(np.arange(0, maxFreq + 1), ensembleMean, color=config.colours[i], label=d.label())
         i += 1
-        n = d.n()
     
     ax.set(xlabel='frequency', ylabel='error', yscale='log', xlim=(0, maxFreq))
     ax.legend(title=f"{scene}, N={n}")
     
-    fig.savefig(f"{config.base_path}/aggr/{scene}_ese.png")
-    fig.savefig(f"{config.base_path}/aggr/{scene}_ese.svg")
-    fig.show()
+    fig.savefig(f"{config.out_path}/{scene}_N{n}/ese.png")
+    fig.savefig(f"{config.out_path}/{scene}_N{n}/ese.svg")
+    plt.close(fig)

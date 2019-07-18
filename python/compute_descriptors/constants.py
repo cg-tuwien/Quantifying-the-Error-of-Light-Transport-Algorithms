@@ -28,3 +28,6 @@
 
 gamma_correction = 1/2.2
 luminance_factors = [[[0.212671, 0.715160, 0.072169]]]
+
+ERROR_FUN_ABSOLUTE = "absErr"
+ERROR_FUN_RELATIVE = "relErr"

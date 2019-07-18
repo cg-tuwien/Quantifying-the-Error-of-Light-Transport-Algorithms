@@ -29,10 +29,13 @@ import re # regexp
 import warnings
 import imageio
 import numpy as np
-import conversion
 from pathlib import Path
 
+import conversion
+import constants
+
 base_path = "/home/madam/tmp"
+out_path = f"{base_path}/python/absErr"
 short_renderings_path = f"{base_path}/shortRenderings"
 reference_renderings_path = f"{base_path}/references"
 
@@ -42,9 +45,12 @@ reference_renderings_path = f"{base_path}/references"
 scenes = {"torus"}
 integrators = {"pt", "memlt"}
 file_ending = ".exr"
-max_n = 20
+max_n = 40
 sdPP_max = 2
 use_external_reference_image = False;
+n_workers = 3;
+error_fun = constants.ERROR_FUN_ABSOLUTE
+relative_error_eps = 0.001
 
 colours = ((0.7, 0.0, 0),
            (0.0, 0.45, 0.7),
@@ -69,9 +75,6 @@ def imwrite_fun(path, image):   # eats linear hdr float
     
 def reference_image(scene):
     return imread_fun(f"{reference_renderings_path}/{scene}.exr")
-    
-def error_fun(image, reference):
-    return conversion.rgb_to_lum(image - reference)
 
 def sample_budget_extractor(path):
     search = re.search('_sampleBudget_(\d+)', path, re.IGNORECASE)

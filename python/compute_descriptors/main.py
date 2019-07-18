@@ -25,15 +25,44 @@
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
+import concurrent.futures
+import math
+
 import config
 import descriptor_comp
 import descriptor_vis
 
-for s in config.scenes:
+    
+def compute_for_scene(scene):
     descriptors = []
     for i in config.integrators:
-        descriptors.append(descriptor_comp.comp(s, i, config))
+        descriptors.append(descriptor_comp.comp(scene, i, config))
     
-    descriptor_vis.vis(s, descriptors, config)
+    return (scene, descriptors)
+
+def compute_for_config(config):
+    i = 0
+    printed = 0
+    ## single threaded (well, numpy is doing some parallelisation under the hood)
+#    for s in config.scenes:
+#        (scene, descriptors) = compute_for_scene(s)
+#        descriptor_vis.vis(scene, descriptors, config)
+#        i += 1
+#        percentage = math.floor(100 * i / len(config.scenes))
+#        print("#" * (percentage - printed),  flush=True, end = '')
+#        printed = percentage
+    ## multi threaded
+    with concurrent.futures.ProcessPoolExecutor(max_workers=config.n_workers) as executor:
+        for (scene, descriptors) in executor.map(compute_for_scene, config.scenes):
+            descriptor_vis.vis(scene, descriptors, config)
+            i += 1
+            percentage = math.floor(100 * i / len(config.scenes))
+            print("#" * (percentage - printed),  flush=True, end = '')
+            printed = percentage
+    print()
+    print("done")
     
-    
+config.max_n = 4000
+compute_for_config(config)
+config.out_path = f"{config.base_path}/python/relErr"
+config.error_fun = config.constants.ERROR_FUN_RELATIVE
