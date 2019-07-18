@@ -87,7 +87,7 @@ class Descriptor:
         return self.__raMean(config.ensemble_area_upper_body_tail_border * self.n(), self.n());
     
     def label(self):
-        return f"{self.integrator.upper()} (RMSE: {self.rmse():.3}, s: {self.rmseSD():.3}, t: {self.avg_spp}x{self.avg_time:.3}s)"
+        return f"{self.integrator.upper()} (RMSE: {self.rmse():.3}, s: {self.rmseSD():.3}, t: {self.avg_spp}x{self.avg_time / self.avg_spp:.3}s)"
 
 def normalised_error(shortRendering, reference, avg_time, config):
     e = (shortRendering - reference) * math.sqrt(avg_time)
@@ -111,6 +111,7 @@ def comp(scene, integrator, config):
         shortRenderingMean += i
         avg_spp += config.sample_budget_extractor(f)
         avg_time += config.time_budget_extractor(f)
+    short_rendering_example = i
         
     shortRenderingMean /= len(files.paths)
     avg_spp /= len(files.paths)
@@ -130,7 +131,7 @@ def comp(scene, integrator, config):
     
     shortRenderingVar /= len(files.paths)
     
-    return Descriptor(integrator, i, shortRenderingMean, shortRenderingVar, radial_averages, avg_spp, avg_time);
+    return Descriptor(integrator, short_rendering_example, shortRenderingMean, shortRenderingVar, radial_averages, avg_spp, avg_time);
         
     
 

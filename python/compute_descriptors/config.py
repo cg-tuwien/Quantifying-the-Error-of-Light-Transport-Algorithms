@@ -39,11 +39,9 @@ out_path = f"{base_path}/python/absErr"
 short_renderings_path = f"{base_path}/shortRenderings"
 reference_renderings_path = f"{base_path}/references"
 
-#scenes = {"torus", "kitchen", "sponza", "bottle", "door", "bathroom"}
-#integrators = {"pt", "bdpt", "memlt", "pssmlt"}
+scenes = {"torus", "kitchen", "sponza", "bottle", "door", "bathroom"}
+integrators = {"pt", "memlt", "pssmlt"}
 
-scenes = {"torus"}
-integrators = {"pt", "memlt"}
 file_ending = ".exr"
 max_n = 40
 sdPP_max = 2

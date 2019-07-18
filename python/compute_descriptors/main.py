@@ -66,3 +66,4 @@ config.max_n = 4000
 compute_for_config(config)
 config.out_path = f"{config.base_path}/python/relErr"
 config.error_fun = config.constants.ERROR_FUN_RELATIVE
+compute_for_config(config)
