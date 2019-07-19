@@ -44,7 +44,7 @@ integrators = {"pt", "memlt", "pssmlt"}
 
 file_ending = ".exr"
 max_n = 40
-sdPP_max = 2
+sdPP_max = 10
 use_external_reference_image = False;
 n_workers = 3;
 error_fun = constants.ERROR_FUN_ABSOLUTE
