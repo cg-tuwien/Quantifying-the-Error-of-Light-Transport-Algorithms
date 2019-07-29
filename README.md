@@ -1,4 +1,5 @@
 # Quantifying the Error of Light Transport Algorithms
+![teaser](https://www.cg.tuwien.ac.at/research/publications/2019/celarek_adam-2019-qelta/celarek_adam-2019-qelta-teaser.png "Overview of the processing and output")
 This repository contains the implementation for the paper Quantifying the Error of Light Transport Algorithms.
 You can download the full paper here: https://www.cg.tuwien.ac.at/research/publications/2019/celarek_adam-2019-qelta/
 ## Paper Abstract
