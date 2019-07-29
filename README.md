@@ -19,8 +19,6 @@ the amount of error substantially.
 * ![supplemental material](https://www.cg.tuwien.ac.at/research/publications/2019/celarek_adam-2019-qelta/celarek_adam-2019-qelta-supplemental_material.pdf)
 * ![presentation slides](https://www.cg.tuwien.ac.at/research/publications/2019/celarek_adam-2019-qelta/celarek_adam-2019-qelta-presentation.pdf)
 * ![university page](https://www.cg.tuwien.ac.at/research/publications/2019/celarek_adam-2019-qelta/)
-* This repository contains a full implementation of the error descriptors proposed in the paper.
-
 
 ## Repository
 The repository consists of 3 parts:
