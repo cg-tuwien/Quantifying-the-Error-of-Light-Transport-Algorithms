@@ -15,9 +15,9 @@ frequencies. The ESE serves two purposes: It reveals correlation between pixels 
 the amount of error substantially.
 
 ## Paper files
-* [full paper](https://www.cg.tuwien.ac.at/research/publications/2019/celarek_adam-2019-qelta/celarek_adam-2019-qelta-paper_preprint.pdf)
-* [supplemental material](https://www.cg.tuwien.ac.at/research/publications/2019/celarek_adam-2019-qelta/celarek_adam-2019-qelta-supplemental_material.pdf)
-* [presentation slides](https://www.cg.tuwien.ac.at/research/publications/2019/celarek_adam-2019-qelta/celarek_adam-2019-qelta-presentation.pdf)
+* [full paper](https://www.cg.tuwien.ac.at/research/publications/2019/celarek_adam-2019-qelta/celarek_adam-2019-qelta-paper_preprint.pdf) (2.7 MiB)
+* [supplemental material](https://www.cg.tuwien.ac.at/research/publications/2019/celarek_adam-2019-qelta/celarek_adam-2019-qelta-supplemental_material.pdf) (78.1 MiB)
+* [presentation slides](https://www.cg.tuwien.ac.at/research/publications/2019/celarek_adam-2019-qelta/celarek_adam-2019-qelta-presentation.pdf) (3.4 MiB)
 * [university page](https://www.cg.tuwien.ac.at/research/publications/2019/celarek_adam-2019-qelta/)
 
 ## Repository
