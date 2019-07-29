@@ -1,7 +1,7 @@
 # Quantifying the Error of Light Transport Algorithms
 ![teaser](https://www.cg.tuwien.ac.at/research/publications/2019/celarek_adam-2019-qelta/celarek_adam-2019-qelta-teaser.png "Overview of the processing and output")
-This repository contains the implementation for the paper Quantifying the Error of Light Transport Algorithms.
-You can download the full paper here: https://www.cg.tuwien.ac.at/research/publications/2019/celarek_adam-2019-qelta/
+Flow chart of the proposed method with outputs (*): A long rendering process is partitioned into many short runs (a) whichare used to estimate error images (b). These are used to calculate a reliable estimate of the expected mean square error (MSE, c*), thatcould e.g. be used to rank a set of different rendering algorithms. The error images (b) are also used to generate a standard-deviation-per-pixel visualization (d*), which shows which of several competing algorithms is best for a specific lighting situation. Finally, Fourier powerspectra (e) are computed and combined into the error spectrum ensemble (ESE, f*) that plots the expected error and outliers with respect tofrequency, visualizing for instance correlation between pixels.
+
 ## Paper Abstract
 This paper proposes a new methodology for measuring the error of unbiased physically based rendering algorithms. The
 current state of the art includes mean squared error (MSE) based metrics and visual comparisons of equal-time renderings
@@ -13,6 +13,12 @@ which we wish to quantify numerically. We use per-pixel standard deviation to id
 algorithms. The second contribution is the error spectrum ensemble (ESE), a tool for measuring the distribution of error over
 frequencies. The ESE serves two purposes: It reveals correlation between pixels and can be used to detect outliers, which offset
 the amount of error substantially.
+
+## Paper files
+[![full paper](https://www.cg.tuwien.ac.at/research/publications/2019/celarek_adam-2019-qelta/celarek_adam-2019-qelta-paper_preprint.pdf)]
+You can download the full paper here: https://www.cg.tuwien.ac.at/research/publications/2019/celarek_adam-2019-qelta/
+This repository contains the implementation for the paper Quantifying the Error of Light Transport Algorithms.
+
 
 ## Repository
 The repository consists of 3 parts:
