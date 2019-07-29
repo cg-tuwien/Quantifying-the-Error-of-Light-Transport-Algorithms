@@ -15,9 +15,11 @@ frequencies. The ESE serves two purposes: It reveals correlation between pixels 
 the amount of error substantially.
 
 ## Paper files
-[![full paper](https://www.cg.tuwien.ac.at/research/publications/2019/celarek_adam-2019-qelta/celarek_adam-2019-qelta-paper_preprint.pdf)]
-You can download the full paper here: https://www.cg.tuwien.ac.at/research/publications/2019/celarek_adam-2019-qelta/
-This repository contains the implementation for the paper Quantifying the Error of Light Transport Algorithms.
+* ![full paper](https://www.cg.tuwien.ac.at/research/publications/2019/celarek_adam-2019-qelta/celarek_adam-2019-qelta-paper_preprint.pdf)
+* ![supplemental material](https://www.cg.tuwien.ac.at/research/publications/2019/celarek_adam-2019-qelta/celarek_adam-2019-qelta-supplemental_material.pdf)
+* ![presentation slides](https://www.cg.tuwien.ac.at/research/publications/2019/celarek_adam-2019-qelta/celarek_adam-2019-qelta-presentation.pdf)
+* ![university page](https://www.cg.tuwien.ac.at/research/publications/2019/celarek_adam-2019-qelta/)
+* This repository contains the implementation for the paper Quantifying the Error of Light Transport Algorithms.
 
 
 ## Repository
